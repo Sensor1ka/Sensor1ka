@@ -1,0 +1,179 @@
+using System;
+using UserInteraction;
+
+/* Описание задания:
+Ганов Александр Анатольевич
+====================
+а) Дописать структуру Complex, добавив метод вычитания комплексных чисел. Продемонстрировать работу структуры.
+б) Дописать класс Complex, добавив методы вычитания и произведения чисел. Проверить работу класса.
+в) Добавить диалог с использованием switch демонстрирующий работу класса.
+ */
+
+namespace Lesson_03.HW_Task_02
+{
+    class Program
+    {
+        static void Main()
+        {
+            ConsoleInteraction ask = new ConsoleInteraction();
+            Double real1 = ask.GetValueDouble("Введите реальную часть комплексного числа #1: ");
+            Double img1 = ask.GetValueDouble("Введите мнимую часть комплексного числа #1: ");
+            Double real2 = ask.GetValueDouble("Введите реальную часть комплексного числа #2: ");
+            Double img2 = ask.GetValueDouble("Введите мнимую часть комплексного числа #2: ");
+
+            ComplexClass dig1 = new ComplexClass(real1, img1);
+            ComplexClass dig2 = new ComplexClass(real2, img2);
+            Console.WriteLine($"\nВведены два комплексных числа: {dig1.ConvertToString()}, {dig2.ConvertToString()}");
+
+            bool ansContinue;
+            do
+            {
+                Console.WriteLine("\nВ программе предусмотрены следующие арифметические операции:"
+                    + "\n1 - Сложение"
+                    + "\n2 - Вычитание"
+                    + "\n3 - Умножение"
+                    + "\n4 - Деление"
+                    );
+                int ans = ask.GetValueInt("Выберите необходимое действие: ");
+
+                switch (ans)
+                {
+                    case 1:
+                        Console.WriteLine($"\nРезультат сложения: {dig1.Add(dig2).ConvertToString()}");
+                        break;
+                    case 2:
+                        Console.WriteLine($"\nРезультат вычитания: {dig1.Substract(dig2).ConvertToString()}");
+                        break;
+                    case 3:
+                        Console.WriteLine($"\nРезультат умножения: {dig1.Multiply(dig2).ConvertToString()}");
+                        break;
+                    case 4:
+                        Console.WriteLine($"\nРезультат деления: {dig1.Devide(dig2).ConvertToString()}");
+                        break;
+                    default:
+                        Console.WriteLine($"Функция с кодом \"{ans}\" отсутствует в программе");
+                        break;
+                }
+                ansContinue = ask.AnsYesNo("Желаете выполнить еще какие-либо действия? (y/n)");
+            } while (ansContinue);
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using UserInteraction;
+
+/* Описание задания:
+Ганов Александр Анатольевич
+====================
+С клавиатуры вводятся числа, пока не будет введён 0 (каждое число в новой строке).
+    Требуется подсчитать сумму всех нечётных положительных чисел. Сами числа и сумму вывести на экран, используя tryParse
+ */
+
+namespace Lesson_03.HW_Task_02
+{
+    class Program
+    {
+        static void Main()
+        {
+            double digit;
+            double sum = 0;
+            List<double> lst = new List<double>();
+            ConsoleInteraction ask;
+
+            do
+            {
+                digit = ask.GetValueDouble("Введите любое число: ");
+                if (digit % 2 != 0 && digit > 0)
+                {
+                    lst.Add(digit);
+                    sum += digit;
+                }
+            } while (digit != 0);
+            if (sum > 0)
+            {
+                Console.WriteLine($"Сумма нечетных положительных чисел: {sum}");
+                Console.WriteLine($"Были введены следующие числа: ");
+                foreach (double lstItem in lst) Console.WriteLine(lstItem);
+            }
+            else Console.WriteLine("Вы не ввели ни одно нечетное положительное число");
+            Console.ReadLine();
+        }
+    }
+}
+
+using System;
+using UserInteraction;
+
+/* Описание задания:
+Ганов Александр Анатольевич
+====================
+Описать класс дробей — рациональных чисел, являющихся отношением двух целых чисел.
+Предусмотреть методы сложения, вычитания, умножения и деления дробей.
+Написать программу, демонстрирующую все разработанные элементы класса.
+Добавить свойства типа int для доступа к числителю и знаменателю;
+Добавить свойство типа double только на чтение, чтобы получить десятичную дробь числа;
+Добавить проверку, чтобы знаменатель не равнялся 0. Выбрасывать исключение ArgumentException("Знаменатель не может быть равен 0");
+Добавить упрощение дробей
+ */
+
+namespace Lesson_03.HW_Task_03
+{
+    class Program
+    {
+        static void Main()
+        {
+            ConsoleInteraction ask = new ConsoleInteraction();
+                      
+            int num1 = ask.GetValueInt("Введите числитель дроби #1: ");
+            int den1 = ask.GetDenominator("Введите знаменатель дроби #1: ");
+            int num2 = ask.GetValueInt("Введите числитель дроби #2: ");
+            int den2= ask.GetDenominator("Введите знаменатель дроби #2: ");
+
+            NaturalFraction dig1 = new NaturalFraction(num1, den1);
+            NaturalFraction dig2 = new NaturalFraction(num2, den2);
+            Console.WriteLine($"\nВведены две дроби: {dig1.ConvertToString(false)}, {dig2.ConvertToString(false)}");
+
+            bool ansContinue;
+            do
+            {
+                Console.WriteLine("\nВ программе предусмотрены следующие операции с дробями:"
+                    + "\n1 - Сложение"
+                    + "\n2 - Вычитание"
+                    + "\n3 - Умножение"
+                    + "\n4 - Деление"
+                    + "\n5 - Упрощение"
+                    + "\n6 - Вывод в виде десятичной дроби"
+                    );
+                int ans = ask.GetValueInt("Выберите необходимое действие: ");
+
+                switch (ans)
+                {
+                    case 1:
+                        Console.WriteLine($"\nРезультат сложения: {dig1.Add(dig2).ConvertToString(true)}");
+                        break;
+                    case 2:
+                        Console.WriteLine($"\nРезультат вычитания: {dig1.Substract(dig2).ConvertToString(true)}");
+                        break;
+                    case 3:
+                        Console.WriteLine($"\nРезультат умножения: {dig1.Multiply(dig2).ConvertToString(true)}");
+                        break;
+                    case 4:
+                        Console.WriteLine($"\nРезультат деления: {dig1.Devide(dig2).ConvertToString(true)}");
+                        break;
+                    case 5:
+                        Console.WriteLine($"\nУпрощенные дроби: {dig1.ConvertToString(true)},  {dig2.ConvertToString(true)}");
+                        break;
+                    case 6:
+                        Console.WriteLine($"\nУпрощенные дроби: {dig1.DecimalFraction.ToString().Replace(',', '.')},  {dig2.DecimalFraction.ToString().Replace(',', '.')}");
+                        break;
+                    default:
+                        Console.WriteLine($"Функция с кодом \"{ans}\" отсутствует в программе");
+                        break;
+                }
+                ansContinue = ask.AnsYesNo("Желаете выполнить еще какие-либо действия? (y/n)");
+            } while (ansContinue);
+        }
+    }
+}
