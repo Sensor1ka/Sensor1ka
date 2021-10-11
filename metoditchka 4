@@ -39,28 +39,29 @@ namespace Массивы._Текстовые_файлы__исключения
 {
     static class Arraylog
     {
-        public static void ConstructArray(int[] mass)
+        public static void ConstructArray()
         {
             int arraymass;
             int startarray;
             int steparray;
             Console.WriteLine("Введите число размера массива, начальное значение и шаг, с которым он будет увеличиваться");
             arraymass = Convert.ToInt32(Console.ReadLine());
+            int[] mass = new int[arraymass];
             startarray = Convert.ToInt32(Console.ReadLine());
             mass[0] = startarray;
             steparray = Convert.ToInt32(Console.ReadLine());
-            for(int i = 1; i < arraymass; i++)
+            for (int i = 1; i < arraymass; i++)
             {
                 mass[i] = mass[i - 1] + steparray;
+                Console.WriteLine(mass[i-1]);
             }
-            Console.WriteLine(mass);
         }
         static void Multi(int[] mass)
         {
             int n;
             Console.WriteLine("Введите число, на которое умножятся элементы массива");
             n = Convert.ToInt32(Console.ReadLine());
-            for(int i=0; i<mass.Length; i++)
+            for (int i = 0; i < mass.Length; i++)
             {
                 mass[i] = mass[i] * n;
             }
@@ -70,14 +71,14 @@ namespace Массивы._Текстовые_файлы__исключения
         {
             int max = 0;
             int count = 0;
-            for (int i=0; i < mass.Length; i++)
+            for (int i = 0; i < mass.Length; i++)
             {
                 if (max < mass[i])
                 {
                     max = mass[i];
                     count = 0;
                 }
-                else if(max == mass[i])
+                else if (max == mass[i])
                 {
                     count++;
                 }
@@ -87,7 +88,7 @@ namespace Массивы._Текстовые_файлы__исключения
         static void Inverse(int[] mass)
         {
             int[] Invmass = new int[mass.Length];
-            for (int i=0 ; i < mass.Length; i++)
+            for (int i = 0; i < mass.Length; i++)
             {
                 Invmass[i] = mass[i] * (-1);
             }
@@ -96,7 +97,7 @@ namespace Массивы._Текстовые_файлы__исключения
         static public int Sum(int[] mass)
         {
             int sum = 0;
-            for (int i=0; i<mass.Length; i++)
+            for (int i = 0; i < mass.Length; i++)
             {
                 sum = sum + mass[i];
             }
@@ -106,14 +107,14 @@ namespace Массивы._Текстовые_файлы__исключения
         {
             StreamReader sr = new StreamReader("data.txt");
             int n = int.Parse(sr.ReadLine());
-            for (int i = 0; i<n; i++)
+            for (int i = 0; i < n; i++)
             {
                 try
                 {
                     mass[i] = int.Parse(sr.ReadLine());
                     Console.WriteLine(mass[i]);
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 {
                     Console.WriteLine(exc.Message);
                 }
@@ -144,16 +145,18 @@ namespace Массивы._Текстовые_файлы__исключения
             Console.WriteLine("Найдено" + " " + count + " " + "пар");
 
         }
-        
+
     }
     class Program
     {
         static void Main(string[] args)
         {
-            int[] mass = new int[20];
+            Console.WriteLine("Введите число размера массива");
+            int masLen = Convert.ToInt32(Console.ReadLine());
+            int[] mass = new int[masLen];
             Arraylog.ex1(mass);
-            Arraylog.ConstructArray(mass);
-            
+            Arraylog.ConstructArray();
+
         }
     }
 }
